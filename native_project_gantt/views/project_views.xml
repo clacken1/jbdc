@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="project_task_ganttview_view" model="ir.ui.view">
+        <field name="name">task ganttview view</field>
+        <field name="model">project.task</field>
+        <field name="arch" type="xml">
+            <ganttview 
+                date_start="start_datetime" 
+                date_stop="end_datetime"
+                default_scale="week"
+                scales="day,week,month,year"
+                color="gantt_color"
+                string="Project Planning"
+                default_group_by="project_id"
+                thumbnails="{'user_id': 'image_128'}"                 
+                display_unavailability="1"                
+                precision="{'day': 'hour:quarter', 'week': 'day:half', 'month': 'day:full','year': 'day:full'}"
+                >
+            </ganttview>
+        </field>
+    </record>
+
+    <record id="view_task_form2_inherit" model="ir.ui.view">
+        <field name="name">BA Task inherit</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field eval="0" name="priority"/>
+        <field name="arch" type="xml">
+            <field name="date_deadline" position="before">
+                <field name="start_datetime"/>
+                <field name="end_datetime"/>
+                <field name="gantt_color" widget="color_picker"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="project.act_project_project_2_project_task_all" model="ir.actions.act_window">
+        <field name="view_mode">ganttview,kanban,tree,form,calendar,pivot,graph,activity</field>
+    </record>
+
+    <record id="project.action_view_all_task" model="ir.actions.act_window">
+        <field name="view_mode">ganttview,tree,kanban,form,calendar,pivot,graph,activity</field>
+    </record>
+
+</odoo>
